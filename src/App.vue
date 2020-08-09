@@ -1,18 +1,32 @@
 <template>
   <div id="app">
-    <PersonForm />
+    <PersonForm @submit="openPopup" />
+    <Popup v-if="isPopupOpened" />
   </div>
 </template>
 
 <script>
-import PersonForm from './components/PersonForm'
+import PersonForm from "./components/PersonForm";
+import Popup from "./components/Popup";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      isPopupOpened: false,
+    };
+  },
   components: {
-    PersonForm
-  }
-}
+    PersonForm,
+    Popup,
+  },
+  methods: {
+    openPopup() {
+      this.isPopupOpened = true;
+    },
+    closePopup() {},
+  },
+};
 </script>
 
 <style lang="scss">
