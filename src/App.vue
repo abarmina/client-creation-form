@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <PersonForm @submit="openPopup" />
-    <Popup v-if="isPopupOpened" />
+    <Popup v-if="isPopupOpened" @outsideClick="closePopup" />
   </div>
 </template>
 
@@ -23,24 +23,34 @@ export default {
   methods: {
     openPopup() {
       this.isPopupOpened = true;
+      document.body.classList.add("noscroll");
     },
-    closePopup() {},
+    closePopup() {
+      this.isPopupOpened = false;
+      document.body.classList.remove("noscroll");
+    },
   },
 };
 </script>
 
 <style lang="scss">
 body {
+  color: #11122b;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   text-align: left;
-  font-size: 16px;
-  color: #11122b;
+  width: 100vw;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.noscroll {
+  overflow: hidden;
 }
 
 @media (min-width: 576px) {
