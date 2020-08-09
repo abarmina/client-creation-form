@@ -1,0 +1,132 @@
+.form {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 20px;
+  justify-items: center;
+  justify-content: space-between;
+  grid-template-areas:
+    "title"
+    "fieldset1"
+    "fieldset2"
+    "fieldset3"
+    "btn";
+
+  margin: 10px;
+
+  &__title {
+    grid-area: title;
+    font-size: $font-size-b;
+    margin: 20px 0 10px;
+  }
+
+  &__fieldset {
+    background-color: $block-bc;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px $shadow-color;
+    width: 300px;
+
+    &--first {
+      grid-area: fieldset1;
+    }
+
+    &--second {
+      grid-area: fieldset2;
+    }
+
+    &--third {
+      grid-area: fieldset3;
+    }
+  }
+
+  &__legend {
+    font-size: $font-size-m;
+    font-weight: 500;
+  }
+
+  &__group {
+    margin-top: 10px;
+  }
+
+  &__input {
+    color: $form-text-color;
+    display: flex;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-size: $font-size-n;
+    width: 275px;
+
+    &[type="radio"],
+    &[type="checkbox"] {
+      width: 18px;
+    }
+
+    &--date {
+      padding: 8px 0;
+    }
+
+    &--select {
+      padding: 5px;
+    }
+
+    &--small {
+      width: 130px;
+    }
+  }
+
+  &__message {
+    color: $invalid-text-color;
+  }
+}
+
+.btn {
+  grid-area: btn;
+  background-image: linear-gradient(
+    45deg,
+    $btn-bc-one 0%,
+    $btn-bc-two 50%,
+    $btn-bc-three 100%
+  );
+  background-position: 100% 0;
+  background-size: 200% 200%;
+  border-radius: 10px;
+  color: $btn-text-color;
+  font-size: $font-size-n;
+  margin-top: 10px;
+  padding: 10px;
+  transition: 0.5s;
+
+  &:hover {
+    background-position: 0 0;
+  }
+}
+
+@media (min-width: 576px) {
+  .form {
+    &__fieldset {
+      width: 450px;
+      padding: 20px;
+    }
+
+    &__input {
+      width: 410px;
+
+      &--small {
+        width: 195px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .form {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    justify-content: space-between;
+    grid-template-areas:
+      "title title"
+      "fieldset1 fieldset2"
+      "fieldset1 fieldset3"
+      "btn btn";
+  }
+}

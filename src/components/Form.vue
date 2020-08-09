@@ -1,12 +1,13 @@
 <template>
   <form class="form" @submit.prevent="submitHandler">
-    <p class="form__title">Фрома создания Клиента</p>
+    <h1 class="form__title">Фрома создания Клиента</h1>
     <fieldset class="form__fieldset form__fieldset--first">
       <legend class="form__legend">Персональные данные</legend>
 
       <div class="form__group">
         <label class="form__label">
           Фамилия
+          <span class="required">*</span>
           <input
             type="text"
             class="form__input"
@@ -24,6 +25,7 @@
       <div class="form__group">
         <label class="form__label">
           Имя
+          <span class="required">*</span>
           <input
             type="text"
             class="form__input"
@@ -53,6 +55,7 @@
       <div class="form__group">
         <label class="form__label">
           Дата рождения
+          <span class="required">*</span>
           <input
             class="form__input form__input--date"
             type="date"
@@ -69,6 +72,7 @@
       <div class="form__group">
         <label class="form__label">
           Номер телефона
+          <span class="required">*</span>
           <input
             type="tel"
             class="form__input"
@@ -84,16 +88,16 @@
       >Пожалуйста, введите номер телефона</small>
       <small
         class="form__message"
+        v-else-if="(phone[0] !== '7')"
+      >Номер телефона должен начинаться с цифры 7</small>
+      <small
+        class="form__message"
         v-else-if="($v.phone.$dirty && !$v.phone.minLength) || ($v.phone.$dirty && !$v.phone.maxLength)"
       >Номер должен состоять из {{ $v.phone.$params.minLength.min }} цифр. Сейчас он содержит {{phone.length}}</small>
       <small
         class="form__message"
         v-else-if="$v.phone.$dirty && !$v.phone.numeric"
       >Номер телефона должен состоять из цифр</small>
-      <small
-        class="form__message"
-        v-else-if="(phone[0] !== '7')"
-      >Номер телефона должен начинаться с цифры 7</small>
 
       <div class="form__group">
         Пол
@@ -110,6 +114,7 @@
       <div class="form__group">
         <label class="form__label">
           Группа клиентов
+          <span class="required">*</span>
           <select
             class="form__input form__input--select"
             multiple
@@ -197,6 +202,7 @@
       <div class="form__group">
         <label class="form__label">
           Город
+          <span class="required">*</span>
           <input
             type="text"
             class="form__input"
@@ -244,6 +250,7 @@
       <div class="form__group">
         <label class="form__label">
           Тип документа
+          <span class="required">*</span>
           <select
             class="form__input"
             v-model="typeDocument"
@@ -302,6 +309,7 @@
       <div class="form__group">
         <label class="form__label">
           Дата выдачи
+          <span class="required">*</span>
           <input
             class="form__input form__input--date"
             type="date"
@@ -430,159 +438,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.form {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-gap: 20px;
-  justify-items: center;
-  justify-content: space-between;
-  grid-template-areas:
-    "title"
-    "fieldset1"
-    "fieldset2"
-    "fieldset3"
-    "btn";
+<style scoped lang="scss">
+@import "@/styles/variables.scss";
 
-  margin: 10px;
-
-  &__title {
-    grid-area: title;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 20px 0 10px;
-  }
-
-  &__fieldset {
-    background-color: #f4f8fc;
-    border: 1px solid #91a6b9;
-    border-radius: 10px;
-    box-shadow: 0px 10px 20px #c7c9ca;
-    width: 300px;
-
-    &--first {
-      grid-area: fieldset1;
-    }
-
-    &--second {
-      grid-area: fieldset2;
-    }
-
-    &--third {
-      grid-area: fieldset3;
-    }
-  }
-
-  &__legend {
-    font-size: 20px;
-    font-weight: 500;
-  }
-
-  &__group {
-    margin-top: 10px;
-  }
-
-  &__input {
-    color: #1b3753;
-    display: flex;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: 17px;
-    width: 275px;
-
-    &[type="radio"],
-    &[type="checkbox"] {
-      width: 18px;
-    }
-
-    &--date {
-      padding: 8px 0;
-    }
-
-    &--select {
-      padding: 5px;
-    }
-
-    &--small {
-      width: 130px;
-    }
-  }
-
-  &__message {
-    color: #e90404;
-  }
-}
-
-.btn {
-  grid-area: btn;
-  background-image: linear-gradient(
-    45deg,
-    #789ab8 0%,
-    #5398bd 50%,
-    #002878 100%
-  );
-  background-position: 100% 0;
-  background-size: 200% 200%;
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 17px;
-  margin-top: 10px;
-  padding: 10px;
-  transition: 0.5s;
-
-  &:hover {
-    background-position: 0 0;
-    box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
-  }
-}
-
-.flex {
-  display: flex;
-
-  &--center {
-    align-items: center;
-    justify-content: center;
-    flex-flow: column;
-  }
-
-  &--end {
-    align-items: flex-end;
-    justify-content: start;
-  }
-
-  &--space-betwen {
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-@media (min-width: 576px) {
-  .form {
-    &__fieldset {
-      width: 450px;
-      padding: 20px;
-    }
-
-    &__input {
-      width: 410px;
-
-      &--small {
-        width: 195px;
-      }
-    }
-  }
-}
-
-@media (min-width: 1024px) {
-  .form {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    justify-items: center;
-    justify-content: space-between;
-    grid-template-areas:
-      "title title"
-      "fieldset1 fieldset2"
-      "fieldset1 fieldset3"
-      "btn btn";
-  }
+.required {
+  color: $required-text;
+  font-size: $font-size-n;
 }
 </style>
